@@ -110,8 +110,8 @@ def train_model(model, train_loader, criterion, optimizer, device):
     all_preds = []
     all_targets = []
 
-    progress_bar = tqdm(train_loader, desc='Training', unit='batch')
-    for data, target in progress_bar:
+    # progress_bar = tqdm(train_loader, desc='Training', unit='batch')
+    for data, target in train_loader:
         data, target = data.to(device), target.to(device)
 
         optimizer.zero_grad()
@@ -127,7 +127,7 @@ def train_model(model, train_loader, criterion, optimizer, device):
         running_loss += loss.item()
 
         # 在进度条中实时显示当前损失
-        progress_bar.set_postfix(loss=f'{loss.item():.6f}')
+        # progress_bar.set_postfix(loss=f'{loss.item():.6f}')
         all_preds.append(output.detach().cpu().numpy())
         all_targets.append(target.detach().cpu().numpy())
 
@@ -147,7 +147,7 @@ def test_model(model, test_loader, criterion, device):
     all_targets = []
 
     with torch.no_grad():
-        for data, target in tqdm(test_loader, desc='Testing'):
+        for data, target in test_loader:
             data, target = data.to(device), target.to(device)
             output = model(data)
             loss = criterion(output, target)
