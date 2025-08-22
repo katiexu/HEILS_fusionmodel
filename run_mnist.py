@@ -86,7 +86,7 @@ def train_model(model, train_loader, criterion, optimizer, device):
     all_preds = []
     all_labels = []
 
-    for batch_idx, (data, target) in enumerate(tqdm(train_loader,desc='Training')):
+    for batch_idx, (data, target) in enumerate(train_loader):
         data, target = data.to(device), target.to(device)
 
         optimizer.zero_grad()
@@ -112,7 +112,7 @@ def test_model(model, test_loader, criterion, device):
     all_labels = []
 
     with torch.no_grad():
-        for data, target in tqdm(test_loader,desc='Testing'):
+        for data, target in test_loader:
             data, target = data.to(device), target.to(device)
             output = model(data)
             loss = criterion(output, target)
